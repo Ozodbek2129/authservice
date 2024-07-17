@@ -1,0 +1,261 @@
+basePath: /
+definitions:
+  AuthService.PasswordRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  AuthService.RefreshToken:
+    properties:
+      refreshtoken:
+        type: string
+    type: object
+  AuthService.RequestLogin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  AuthService.RequestRegister:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      password:
+        type: string
+      user_type:
+        type: string
+      username:
+        type: string
+    type: object
+  models.Request:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+      new_password:
+        type: string
+    type: object
+host: localhost:50052
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is an authentication service API.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Auth API
+  version: "1.0"
+paths:
+  /canceltoken:
+    post:
+      consumes:
+      - application/json
+      description: Cancel the refresh token
+      parameters:
+      - description: Cancel Token Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/AuthService.RefreshToken'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Cancel refresh token
+      tags:
+      - auth
+  /loginauth:
+    post:
+      consumes:
+      - application/json
+      description: Login with email and password
+      parameters:
+      - description: Login Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/AuthService.RequestLogin'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Login user
+      tags:
+      - auth
+  /passwordrecovery:
+    post:
+      consumes:
+      - application/json
+      description: Send password recovery email
+      parameters:
+      - description: Password Recovery Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/AuthService.PasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Recover password
+      tags:
+      - auth
+  /registerauth:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user with username, email, and password
+      parameters:
+      - description: Register Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/AuthService.RequestRegister'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Register a new user
+      tags:
+      - auth
+  /updatetoken:
+    post:
+      consumes:
+      - application/json
+      description: Update the access token using the refresh token
+      parameters:
+      - description: Update Token Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/AuthService.RefreshToken'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update access token
+      tags:
+      - auth
+  /verifycoderesetpassword:
+    post:
+      consumes:
+      - application/json
+      description: Verify the recovery code and reset the password
+      parameters:
+      - description: Verify Code and Reset Password Request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Request'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Verify code and reset password
+      tags:
+      - auth
+swagger: "2.0"
